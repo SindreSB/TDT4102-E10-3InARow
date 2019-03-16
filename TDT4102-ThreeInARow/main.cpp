@@ -4,7 +4,7 @@
 #include "GameWindow.h"
 
 int main() {
-	GameWindow win{ {100, 100}, 8, 8, "n-in-a-row" };
+	GameWindow win{ {100, 100}, "3-in-a-row" };
 
 	return gui_main();
 }
