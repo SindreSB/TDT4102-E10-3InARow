@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Debug
+/TDT4102-ThreeInARow/Debug
+/TDT4102-ThreeInARow/x64/Debug
+/x64/Debug

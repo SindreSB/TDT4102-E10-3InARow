@@ -1,12 +1,14 @@
 ﻿#include "GameWindow.h"
 
+
 const map<Player, Cell> playerToCellState{
 	{Player::one, Cell::cross},
 	{Player::two, Cell::sircle}
 };
 
 GameWindow::GameWindow(Point xy, const string& title):
-	Graph_lib::Window{ xy, width * cellSize, height * cellSize, title }
+	Graph_lib::Window{ xy, width * cellSize, height * cellSize, title },
+	gameOverText{ {Width() / 2, Height() / 2}, ""}
 {
 	// Legg til alle tiles p� vinduet
 	for (int i = 0; i < height; ++i) {
@@ -17,6 +19,10 @@ GameWindow::GameWindow(Point xy, const string& title):
 			attach(tiles.back());
 		}
 	}
+
+	gameOverText.set_color(Color::black);
+	gameOverText.move(-40, 0);
+	attach(gameOverText);
 
 	// Fjern window reskalering
 	resizable(nullptr);
@@ -76,11 +82,17 @@ bool GameWindow::haveNSymbolsInARow(Player p)
 
 int GameWindow::isGameOver()
 {
+	if (gameOver) {
+		return true;
+	}
+
 	if (haveNSymbolsInARow(Player::one)) {
-		cout << "Player one won";
+		gameOver = true;
+		gameOverText.set_label("One won");
 	}
 	if (haveNSymbolsInARow(Player::two)) {
-		cout << "Player two won";
+		gameOver = true;
+		gameOverText.set_label("Two won");
 	}
 	return 0;
 }
@@ -99,6 +111,11 @@ void GameWindow::cbClick(Address, Address pw)
 
 	// Sjekk at klikk var innenfor skjermen
 	if (!win.inRange(xy)) {
+		return;
+	}
+
+	// Sjekk om spillet er over
+	if (win.isGameOver()) {
 		return;
 	}
 
