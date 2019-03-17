@@ -22,7 +22,7 @@ GameWindow::GameWindow(Point xy, const string& title):
 
 	gameOverText.set_color(Color::black);
 	gameOverText.move(-40, 0);
-	attach(gameOverText);
+	gameOverText.set_font_size(20);
 
 	// Fjern window reskalering
 	resizable(nullptr);
@@ -88,13 +88,20 @@ int GameWindow::isGameOver()
 
 	if (haveNSymbolsInARow(Player::one)) {
 		gameOver = true;
-		gameOverText.set_label("One won");
+		showGameOverText("One won");
 	}
 	if (haveNSymbolsInARow(Player::two)) {
 		gameOver = true;
-		gameOverText.set_label("Two won");
+		showGameOverText("Two one");
 	}
 	return 0;
+}
+
+void GameWindow::showGameOverText(string text)
+{
+	gameOverText.set_label("Two won");
+	attach(gameOverText);
+	flush();
 }
 
 void GameWindow::togglePlayerTurn()

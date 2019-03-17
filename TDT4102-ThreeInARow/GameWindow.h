@@ -32,6 +32,7 @@ private:
 	const Tile& at(Point xy) const { return tiles[xy.x / cellSize + (xy.y / cellSize) * width]; }
 
 	int isGameOver();
+	void showGameOverText(string text);
 	bool haveNSymbolsInARow(Player p);
 
 	Player getPlayerTurn() { return playerTurn; }
