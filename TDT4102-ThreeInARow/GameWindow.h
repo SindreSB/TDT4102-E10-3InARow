@@ -17,14 +17,10 @@ public:
 private:
 	// Graphic objects
 	Vector_ref<Tile> tiles;
-	Text gameOverText;
 
 	//Height og Width i piksler
 	int Height() const { return height * cellSize; }
 	int Width() const { return width * cellSize; }
-
-	// Variable to keep track of game state
-	bool gameOver = false;
 
 	// Functions to get tile from 
 	bool inRange(Point xy) const { return xy.x >= 0 && xy.x < Width() && xy.y >= 0 && xy.y < Height(); }
@@ -32,10 +28,6 @@ private:
 	Tile& at(Point xy) { return tiles[xy.x / cellSize + (xy.y / cellSize) * width]; }
 	const Tile& at(Point xy) const { return tiles[xy.x / cellSize + (xy.y / cellSize) * width]; }
 
-	void showGameOverText(string text);
-	
-	bool isGameOver();
-	bool haveNSymbolsInARow(Player p);
 
 	Player getPlayerTurn() { return playerTurn; }
 	void togglePlayerTurn();
