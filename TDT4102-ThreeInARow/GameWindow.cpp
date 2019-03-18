@@ -80,7 +80,7 @@ bool GameWindow::haveNSymbolsInARow(Player p)
 	return false;
 }
 
-int GameWindow::isGameOver()
+bool GameWindow::isGameOver()
 {
 	if (gameOver) {
 		return true;
@@ -94,7 +94,7 @@ int GameWindow::isGameOver()
 		gameOver = true;
 		showGameOverText("Two one");
 	}
-	return 0;
+	return false;
 }
 
 void GameWindow::showGameOverText(string text)
@@ -132,9 +132,14 @@ void GameWindow::cbClick(Address, Address pw)
 		return;
 	}
 
-	clickedTile.set_state(playerToCellState.at(win.getPlayerTurn()));
+	// Set symbolet til nåværende spiller i ruten
+	Player currentPlayer = win.getPlayerTurn();
+	Cell playersCell = playerToCellState.at(currentPlayer);
+	clickedTile.set_state(playersCell);
+
+	// Bytt spiller, slik at neste runde setter det andre symbolet
 	win.togglePlayerTurn();
 
-	// TODO check for victory
+	// Sjekk om noen nå har vunnet
 	win.isGameOver();
 }

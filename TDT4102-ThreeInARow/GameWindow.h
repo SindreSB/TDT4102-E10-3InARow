@@ -13,6 +13,7 @@ public:
 	static constexpr int cellSize = 50;
 	GameWindow(Point xy, const string& title);
 
+	Player playerTurn = Player::one; 
 private:
 	// Graphic objects
 	Vector_ref<Tile> tiles;
@@ -22,17 +23,18 @@ private:
 	int Height() const { return height * cellSize; }
 	int Width() const { return width * cellSize; }
 
-	// Variables to keep track of game state
-	Player playerTurn = Player::one; 
+	// Variable to keep track of game state
 	bool gameOver = false;
 
+	// Functions to get tile from 
 	bool inRange(Point xy) const { return xy.x >= 0 && xy.x < Width() && xy.y >= 0 && xy.y < Height(); }
 	Tile& at(int x, int y) { return tiles[x + width * y]; }
 	Tile& at(Point xy) { return tiles[xy.x / cellSize + (xy.y / cellSize) * width]; }
 	const Tile& at(Point xy) const { return tiles[xy.x / cellSize + (xy.y / cellSize) * width]; }
 
-	int isGameOver();
 	void showGameOverText(string text);
+	
+	bool isGameOver();
 	bool haveNSymbolsInARow(Player p);
 
 	Player getPlayerTurn() { return playerTurn; }
