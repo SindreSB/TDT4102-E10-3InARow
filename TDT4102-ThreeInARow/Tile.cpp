@@ -3,7 +3,7 @@
 // For � sette Tilelabel i henhold til state
 const map<Cell, string> cellToSymbol{ {Cell::empty, ""},
 									 {Cell::cross, "X"},
-									 {Cell::sircle, "O"} };
+									 {Cell::circle, "O"} };
 
 void Tile::set_state(Cell s)
 {

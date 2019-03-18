@@ -3,7 +3,7 @@
 
 const map<Player, Cell> playerToCellState{
 	{Player::one, Cell::cross},
-	{Player::two, Cell::sircle}
+	{Player::two, Cell::circle}
 };
 
 GameWindow::GameWindow(Point xy, const string& title):

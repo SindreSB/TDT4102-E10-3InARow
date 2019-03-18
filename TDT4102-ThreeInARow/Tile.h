@@ -3,7 +3,7 @@
 
 using namespace Graph_lib;
 
-enum class Cell { empty, cross, sircle};
+enum class Cell { empty, cross, circle};
 
 struct Tile : Button {
 	Cell state = Cell::empty;
