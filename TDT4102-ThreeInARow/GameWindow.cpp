@@ -23,6 +23,7 @@ GameWindow::GameWindow(Point xy, const string& title):
 	gameOverText.set_color(Color::black);
 	gameOverText.move(-40, 0);
 	gameOverText.set_font_size(20);
+	attach(gameOverText);
 
 	// Fjern window reskalering
 	resizable(nullptr);
@@ -82,18 +83,27 @@ bool GameWindow::haveNSymbolsInARow(Player p)
 
 bool GameWindow::isGameOver()
 {
+	// Om vi allerede har sjekket og noe n har vunnet, trenger vi ikke s
+	// sjekke igjen
 	if (gameOver) {
 		return true;
 	}
 
-	if (haveNSymbolsInARow(Player::one)) {
+	Player currentPlayer = getPlayerTurn();
+	if (haveNSymbolsInARow(currentPlayer)) {
+		// Lagre at spillet er vunnet, så vi ikke må sjekke igjen
 		gameOver = true;
-		showGameOverText("One won");
+
+		if (currentPlayer == Player::one) {
+			gameOverText.set_label("One won");
+		}
+		else {
+			gameOverText.set_label("Two won");
+		}
+
+		flush();
 	}
-	if (haveNSymbolsInARow(Player::two)) {
-		gameOver = true;
-		showGameOverText("Two one");
-	}
+
 	return false;
 }
 
@@ -137,9 +147,10 @@ void GameWindow::cbClick(Address, Address pw)
 	Cell playersCell = playerToCellState.at(currentPlayer);
 	clickedTile.set_state(playersCell);
 
+	// Sjekk om noen nå har vunnet
+	win.isGameOver();
+	
 	// Bytt spiller, slik at neste runde setter det andre symbolet
 	win.togglePlayerTurn();
 
-	// Sjekk om noen nå har vunnet
-	win.isGameOver();
 }
